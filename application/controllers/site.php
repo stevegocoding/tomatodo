@@ -19,7 +19,13 @@ class Site extends CI_Controller
 
         if (isset($is_logged_in) && $is_logged_in)
         {
-            $this->load->view('main');
+            $username = $this->session->userdata('username');
+
+            $view_data = array(
+                'username' => $username
+            );
+
+            $this->load->view('main', $view_data);
         }
         else
         {
