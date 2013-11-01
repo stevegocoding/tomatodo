@@ -9,15 +9,15 @@
     	<target name="db-migrate">
 
         <!-- these two filenames will contain the generated SQL to do the deploy and roll it back-->
-        <property name="build.dbdeploy.deployfile" value="database/deploy-${DSTAMP}${TSTAMP}.sql" />
-        <property name="build.dbdeploy.undofile" value="database/undo-${DSTAMP}${TSTAMP}.sql" />
+        <property name="build.dbdeploy.deployfile" value="database/deploy/deploy-${DSTAMP}${TSTAMP}.sql" />
+        <property name="build.dbdeploy.undofile" value="database/deploy/undo-${DSTAMP}${TSTAMP}.sql" />
 
         <!-- generate the deployment scripts -->
         <dbdeploy 
             url="mysql:host=${db.host};dbname=${db.database}" 
             userid="${db.user}" 
             password="${db.password}" 
-            dir="${project.basedir}/database" 
+            dir="${project.basedir}/database/deltas" 
             outputfile="${project.basedir}/${build.dbdeploy.deployfile}" 
             undooutputfile="${project.basedir}/${build.dbdeploy.undofile}" />
 
