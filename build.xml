@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="tomatodo" default="db-migrate" basedir=".">
+
+	<!-- Sets the DSTAMP, TSTAMP and TODAY properties -->
+    	<tstamp/>
+
+    	<property file="./build/properties/default.properties" />
+
+    	<target name="db-migrate">
+
+        <!-- these two filenames will contain the generated SQL to do the deploy and roll it back-->
+        <property name="build.dbdeploy.deployfile" value="database/deploy-${DSTAMP}${TSTAMP}.sql" />
+        <property name="build.dbdeploy.undofile" value="database/undo-${DSTAMP}${TSTAMP}.sql" />
+
+        <!-- generate the deployment scripts -->
+        <dbdeploy 
+            url="mysql:host=${db.host};dbname=${db.database}" 
+            userid="${db.user}" 
+            password="${db.password}" 
+            dir="${project.basedir}/database" 
+            outputfile="${project.basedir}/${build.dbdeploy.deployfile}" 
+            undooutputfile="${project.basedir}/${build.dbdeploy.undofile}" />
+
+        <!-- execute the SQL - Use mysql command line to avoid trouble with large files or many statements and PDO -->
+        <exec
+            command="sudo mysql -h${db.host} -u${db.user} -p${db.password} ${db.database} &lt; ${build.dbdeploy.deployfile}"
+            dir="${project.basedir}"
+            checkreturn="true" />		
+		
+ 
+	</target>
+
+</project>
