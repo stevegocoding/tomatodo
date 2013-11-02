@@ -79,6 +79,21 @@ class Todo_api extends REST_Controller
         }
     }
 
+    public function todos_get()
+    {
+        $this->load->model('todo_model');
+        $todos = $this->todo_model->getAll();
+
+        if ($todos)
+        {
+            $this->response($todos, 200);
+        }
+        else
+        {
+            $this->response(array('error' => 'Couldn\'t find any users!'), 404);
+        }
+    }
+
     public function todo_put()
     {
     }

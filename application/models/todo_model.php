@@ -62,6 +62,6 @@ class Todo_model extends CI_Model
     public function delete($id)
     {
         $this->db->where('id', $id);
-        $this->db->delete($this->table_name); 
+        $this->db->delete($this->table_name);
     }
 }
