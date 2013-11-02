@@ -54,17 +54,39 @@ class Todo_api extends REST_Controller
 
     public function todo_post()
     {
+        $this->load->model('todo_model');
+        $item = $this->todo_model->getById($this->post('id'));
 
+        if (isset($item))
+        {
+            $data = array(
+                'content' => $this->post('content'),
+                'priority' => $this->post('priority'),
+                'done' => $this->post('done')
+            );
+            $this->todo_model->update($this->post('id'), $data);
+        }
+        else
+        {
+            $data = array(
+                'id' => $this->post('id'),
+                'content' => $this->post('content'),
+                'priority' => $this->post('priority'),
+                'done' => $this->post('done')
+            );
+
+            $this->todo_model->add($data);
+        }
     }
 
     public function todo_put()
     {
-
     }
 
     public function todo_delete()
     {
-
+        $this->load->model('todo_model');
+        $this->todo_model->delete($this->delete('id'));
     }
 }
 

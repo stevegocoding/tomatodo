@@ -8,14 +8,17 @@
 
 class Todo_model extends CI_Model
 {
+    private $table_name = 'todo';
+
     public function getAll()
     {
-        $result = array(array());
-        $query = $this->db->get('todo');
+        $result = null;
+        $query = $this->db->get($this->table_name);
 
         if ($query->num_rows() > 0)
         {
             $i = 0;
+            $result = array(array());
             foreach ($query->result() as $row)
             {
                 $result[$i++] = $row;
@@ -27,8 +30,8 @@ class Todo_model extends CI_Model
 
     public function getById($id)
     {
-        $result = array();
-        $query = $this->db->get_where('todo', array('id' => $id));
+        $result = null;
+        $query = $this->db->get_where($this->table_name, array('id' => $id));
 
         if ($query->num_rows() == 1)
         {
@@ -36,5 +39,29 @@ class Todo_model extends CI_Model
         }
 
         return $result;
+    }
+
+    public function update($id, $data)
+    {
+        $this->db->where('id', $id);
+
+        $this->db->update($this->table_name, $data);
+    }
+
+    public function add($record)
+    {
+        $data = array(
+            'id' => $record['id'],
+            'content' => $record['content'],
+            'priority' => $record['priority'],
+            'done' => $record['done']
+        );
+        $this->db->insert($this->table_name, $data);
+    }
+
+    public function delete($id)
+    {
+        $this->db->where('id', $id);
+        $this->db->delete($this->table_name); 
     }
 }
