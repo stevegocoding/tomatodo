@@ -74,8 +74,7 @@ class Todo_api extends REST_Controller
                 'priority' => $this->post('priority'),
                 'done' => $this->post('done')
             );
-
-            $this->todo_model->add($data);
+            $this->create($data);
         }
     }
 
@@ -96,12 +95,30 @@ class Todo_api extends REST_Controller
 
     public function todo_put()
     {
+        $this->load->model('todo_model');
+        $item = $this->todo_model->getById($this->put('id'));
+
+        if ($item)
+        {
+            $this->response($item, 200);
+        }
+        else
+        {
+            $this->response(array('error' => 'Couldn\'t find any users!'), 404);
+        }
+
     }
 
     public function todo_delete()
     {
         $this->load->model('todo_model');
         $this->todo_model->delete($this->delete('id'));
+    }
+
+
+    private function create($data)
+    {
+        $this->todo_model->add($data);
     }
 }
 

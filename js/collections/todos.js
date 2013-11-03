@@ -15,7 +15,7 @@ define(['underscore', 'backbone', 'models/todo'],
 
             model: TodoModel,
 
-            url: 'index.php/api/todo_api/todos/format/json',
+            url: 'index.php/api/todo_api/todos',
 
             doneItems: function() {
                 return this.filter(function(todo) {
@@ -25,6 +25,13 @@ define(['underscore', 'backbone', 'models/todo'],
 
             remainingItems: function() {
                 return this.without.apply(this, this.doneItems());
+            },
+
+            nextOrder: function() {
+                if (!this.length) {
+                    return 1;
+                }
+                return this.last().get('priority') + 1;
             },
 
             /**

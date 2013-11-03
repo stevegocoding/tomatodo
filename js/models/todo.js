@@ -11,10 +11,9 @@ define(['backbone'], function(Backbone) {
     /* Todo Model */
     var TodoModel = Backbone.Model.extend({
 
-        // urlRoot: 'todo/id',
+        urlRoot: 'index.php/api/todo_api/todo/id',
 
         defaults: {
-            id: 0,
             content: '',
             done: false
         },

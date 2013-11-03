@@ -20,8 +20,9 @@ define(['underscore',
 
             events: {
                 'click .toggle': 'toggleDone',
-                'click label': 'edit',
-                'blur .edit': 'close'
+                'click .label': 'edit',
+                'mouseover .label': 'onMouseOver',
+                'blur .label': 'close'
             },
 
             initialize: function() {
@@ -34,7 +35,8 @@ define(['underscore',
                 this.$el.toggleClass('done', this.model.get('done'));
 
                 // this.toggleVisible();
-                this.$input = this.$('.edit');
+                this.$input = this.$('.label');
+
                 return this;
             },
 
@@ -50,8 +52,19 @@ define(['underscore',
              * Switch to 'editing' mode, displaying the input filed
              */
             edit: function() {
+                /*
                 this.$el.addClass('editing');
                 this.$input.focus();
+                */
+
+                this.$input.attr('contentEditable', true);
+            },
+
+            /**
+             * 'mouseover' event handler
+             */
+            onMouseOver: function() {
+                
             },
 
 
@@ -59,7 +72,7 @@ define(['underscore',
              * Close the 'editing' mode, saving the changes to the model
              */
             close: function() {
-                var value = this.$input.val();
+                var value = this.$input.text();
                 var trimmedValue = value.trim();
 
                 if (trimmedValue) {
@@ -76,7 +89,7 @@ define(['underscore',
                     this.clear();
                 }
 
-                this.$el.removeClass('editing');
+                this.$input.attr('contentEditable', false);
             },
 
             clear: function() {

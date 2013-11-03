@@ -1,5 +1,8 @@
 <div class="view">
-    <input class="toggle" type="checkbox" value="<%= done? 'checked' : '' %>"></input>
-    <label> <%= content %> </label>
+    <span class="handler"></span>
+    <input class="toggle" type="checkbox" <%= done? 'checked' : '' %>>
+    <p class="label"> <%= content %> </p>
 </div>
+<!--
 <input class="edit" value="<%-content %>">
+-->

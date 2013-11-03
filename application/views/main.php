@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Tomatodo Application</title>
+
+    <link rel="stylesheet" href="<?php echo base_url();?>assets/css/style.css"/>
 </head>
 <body>
 
@@ -11,7 +13,6 @@
 
 
 <section id="tomatodo-app">
-
 
     <header id="header">
 
