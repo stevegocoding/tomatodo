@@ -5,23 +5,25 @@
  * To change this template use File | Settings | File Templates.
  */
 
-define(['underscore',
+define(['jquery',
+        'underscore',
         'backbone',
-        'text!templates/todos.html'],
-    function(_, Backbone, todosTemplate) {
+        'text!templates/todos.html',
+        'jquery-ui'],
+    function($, _, Backbone, todosTemplate) {
 
         'use strict';
 
         var TodoView = Backbone.View.extend({
 
             tagName: 'li',
+            // className: 'ui-widget-content',
 
             template: _.template(todosTemplate),
 
             events: {
                 'click .toggle': 'toggleDone',
                 'click .label': 'edit',
-                'mouseover .label': 'onMouseOver',
                 'blur .label': 'close'
             },
 
@@ -36,6 +38,23 @@ define(['underscore',
 
                 // this.toggleVisible();
                 this.$input = this.$('.label');
+                this.$dragHandle = this.$('.handle');
+
+                var self = this;
+                this.$el.mouseenter(function() {
+                    self.onMouseOver();
+                });
+                this.$el.mouseleave(function() {
+                    self.onMouseOut();
+                });
+
+                /*
+                var $todoList = $('#todo-list');
+                this.$el.draggable({
+                    connectToSortable: '#todo-list',
+                    axis: 'y',
+                    handle: 'span'});
+                */
 
                 return this;
             },
@@ -64,9 +83,12 @@ define(['underscore',
              * 'mouseover' event handler
              */
             onMouseOver: function() {
-                
+                this.$dragHandle.css('display', 'inline');
             },
 
+            onMouseOut: function() {
+                this.$dragHandle.css('display', 'none');
+            },
 
             /**
              * Close the 'editing' mode, saving the changes to the model

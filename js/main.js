@@ -8,10 +8,11 @@
 require.config({
     baseUrl: "js/",
     paths: {
-        "text" : 'lib/text',
-        jquery: 'lib/jquery-min',
-        underscore: 'lib/underscore-min',
-        backbone: 'lib/backbone-min'
+        'text' : 'lib/text',
+        'jquery': 'lib/jquery-min',
+        'jquery-ui': 'lib/jquery-ui-min',
+        'underscore': 'lib/underscore-min',
+        'backbone': 'lib/backbone-min'
     },
     shim: {
 
@@ -29,9 +30,10 @@ require.config({
 });
 
 
-require(['backbone', 'views/app'], function(Backbone, AppView) {
+require(['jquery', 'backbone', 'views/app'], function($, Backbone, AppView) {
 
-    console.log('haha');
+    $(function() {
+        new AppView();
+    });
 
-    new AppView();
 });

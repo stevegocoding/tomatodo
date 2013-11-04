@@ -100,6 +100,13 @@ class Todo_api extends REST_Controller
 
         if ($item)
         {
+            $data = array(
+                'content' => $this->put('content'),
+                'priority' => $this->put('priority'),
+                'done' => $this->put('done')
+            );
+
+            $this->todo_model->update($this->put('id'), $data);
             $this->response($item, 200);
         }
         else

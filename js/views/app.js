@@ -8,7 +8,8 @@
 define(['underscore',
         'backbone',
         'collections/todos',
-        'views/todo_view'],
+        'views/todo_view',
+        'jquery-ui'],
     function(_, Backbone, TodoCollection, TodoView) {
 
         'use strict';
@@ -35,6 +36,7 @@ define(['underscore',
                 this.$main = this.$('#main');
 
                 this.$todolist = this.$('#todo-list');
+                this.$todolist.sortable({handle: '.handle'});
 
                 this.listenTo(this.todoCollection, 'add', this.addOne);
 
